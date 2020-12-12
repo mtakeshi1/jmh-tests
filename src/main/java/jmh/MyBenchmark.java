@@ -56,6 +56,7 @@ public class MyBenchmark {
     private SimpleRecord recordx, recordy;
 
     private Multiplicable m0, m1;
+    private PlainOldDoubleWrapper w0, w1;
 
     @Benchmark
     public void plainDoubleMultiplication(Blackhole blackhole) {
@@ -68,6 +69,8 @@ public class MyBenchmark {
         recordy = new SimpleRecord(valy);
         m0 = recordx;
         m1 = recordy;
+        w0 = new PlainOldDoubleWrapper(valx);
+        w1 = new PlainOldDoubleWrapper(valy);
     }
 
     @Benchmark
@@ -76,9 +79,15 @@ public class MyBenchmark {
     }
 
     @Benchmark
-    public void recordMultiplicationInterface(Blackhole blackhole) {
+    public void multiplyRecordInterface(Blackhole blackhole) {
         blackhole.consume(m0.multiply(m1));
     }
+
+    @Benchmark
+    public void multiplyPOJO(Blackhole blackhole) {
+        blackhole.consume(w0.multiply(w1));
+    }
+
     public static void main(String[] args) throws RunnerException {
 
         Options opt = new OptionsBuilder()
