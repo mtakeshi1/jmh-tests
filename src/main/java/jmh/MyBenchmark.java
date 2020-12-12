@@ -38,9 +38,13 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+import java.util.concurrent.TimeUnit;
+
 @State(Scope.Benchmark)
 @Timeout(time = 5)
 @Warmup(time = 1)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class MyBenchmark {
 
 
@@ -68,7 +72,7 @@ public class MyBenchmark {
 
     @Benchmark
     public void recordMultiplication(Blackhole blackhole) {
-        blackhole.consume(recordx.multiply(recordy));
+        blackhole.consume(recordx.multiplyLocal(recordy));
     }
 
     @Benchmark
